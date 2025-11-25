@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send to Laptop</title>
+</head>
+<body>
+    <h2>Send Link to Laptop</h2>
+
+    <input id="link" type="text" placeholder="Paste URL here" style="width: 300px;">
+    <button onclick="sendLink()">Send</button>
+
+    <p id="status"></p>
+
+    <script>
+        const LAPTOP_HOST = "sendtolaptop.local";
+
+        function sendLink() {
+            const url = document.getElementById("link").value;
+            const encoded = encodeURIComponent(url);
+
+            fetch(`http://${LAPTOP_HOST}:5000/open?url=${encoded}`)
+                .then(res => res.text())
+                .then(msg => document.getElementById("status").innerText = msg)
+                .catch(err => alert("Error: " + err));
+        }
+    </script>
+</body>
+</html>
